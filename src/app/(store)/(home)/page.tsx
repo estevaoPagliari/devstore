@@ -4,7 +4,15 @@ import { api } from '@/data/api'
 import { Product } from '@/data/types/product'
 
 async function getFeaturesProducts(): Promise<Product[]> {
-  const responde = await api('/products/features')
+  const responde = await api('/products/features', {
+    // Tempo para busca novamente
+    /*
+    next: {
+      revalidate: 60 * 60,
+    },
+    */
+    cache: 'no-store',
+  })
 
   const products = await responde.json()
 
